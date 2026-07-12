@@ -26,15 +26,15 @@ from evennia import utils
 
 CONNECTION_SCREEN = """
 |b==============================================================|n
- Welcome to |g{}|n, version {}!
+ 歡迎來到 |g{}|n（版本 {}）！
 
- If you have an existing account, connect to it by typing:
-      |wconnect <username> <password>|n
- If you need to create an account, type (without the <>'s):
-      |wcreate <username> <password>|n
+ 若已有帳號，請輸入以下指令登入：
+      |w登入 <帳號> <密碼>|n  （或英文 connect <username> <password>）
+ 若尚未建立帳號，請輸入：
+      |w註冊 <帳號> <密碼>|n  （或英文 create <username> <password>）
 
- If you have spaces in your username, enclose it in quotes.
- Enter |whelp|n for more info. |wlook|n will re-show this screen.
+ 帳號或密碼中若含有空格，請用引號包住。
+ 輸入 |w說明|n 取得更多說明；輸入 |w看|n 可重新顯示這個畫面。
 |b==============================================================|n""".format(
     settings.SERVERNAME, utils.get_evennia_version("short")
 )

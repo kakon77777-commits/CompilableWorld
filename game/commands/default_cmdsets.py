@@ -16,6 +16,8 @@ own cmdsets by inheriting from them or directly from `evennia.CmdSet`.
 
 from evennia import default_cmds
 
+from commands import chinese_aliases
+
 
 class CharacterCmdSet(default_cmds.CharacterCmdSet):
     """
@@ -34,6 +36,16 @@ class CharacterCmdSet(default_cmds.CharacterCmdSet):
         #
         # any commands you add below will overload the default ones.
         #
+        # Traditional-Chinese aliases (see commands/chinese_aliases.py) —
+        # these overload the matching default command (same key) purely to
+        # add extra aliases, English verbs still work unchanged.
+        self.add(chinese_aliases.CmdLook())
+        self.add(chinese_aliases.CmdInventory())
+        self.add(chinese_aliases.CmdGet())
+        self.add(chinese_aliases.CmdDrop())
+        self.add(chinese_aliases.CmdGive())
+        self.add(chinese_aliases.CmdSay())
+        self.add(chinese_aliases.CmdHelp())
 
 
 class AccountCmdSet(default_cmds.AccountCmdSet):
@@ -54,6 +66,8 @@ class AccountCmdSet(default_cmds.AccountCmdSet):
         #
         # any commands you add below will overload the default ones.
         #
+        self.add(chinese_aliases.CmdQuit())
+        self.add(chinese_aliases.CmdWho())
 
 
 class UnloggedinCmdSet(default_cmds.UnloggedinCmdSet):
@@ -72,6 +86,11 @@ class UnloggedinCmdSet(default_cmds.UnloggedinCmdSet):
         #
         # any commands you add below will overload the default ones.
         #
+        self.add(chinese_aliases.CmdUnconnectedConnect())
+        self.add(chinese_aliases.CmdUnconnectedCreate())
+        self.add(chinese_aliases.CmdUnconnectedQuit())
+        self.add(chinese_aliases.CmdUnconnectedLook())
+        self.add(chinese_aliases.CmdUnconnectedHelp())
 
 
 class SessionCmdSet(default_cmds.SessionCmdSet):

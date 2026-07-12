@@ -36,6 +36,26 @@ SERVERNAME = "game"
 
 
 ######################################################################
+# Localization — Traditional Chinese (Taiwan)
+######################################################################
+# Translates Evennia's own system/help/error messages (login flow, command
+# feedback like "already puppeted", etc.) into Traditional Chinese. This does
+# NOT translate default command keys (look/get/inventory/quit are still typed
+# in English — see game/commands/default_cmdsets.py, which adds Chinese
+# aliases for those instead) or any World IR content (room/NPC/quest text is
+# whatever language the source material was in).
+#
+# Evennia ships a Simplified Chinese translation (evennia/locale/zh/); this
+# project machine-converted it to Taiwan-standard Traditional Chinese via
+# OpenCC's s2twp profile (see game/locale/zh_Hant/) rather than using the
+# Simplified original as-is, since the project's primary user reads/writes
+# Traditional Chinese.
+USE_I18N = True
+LANGUAGE_CODE = "zh-hant"
+LOCALE_PATHS = LOCALE_PATHS + [os.path.join(GAME_DIR, "locale")]
+
+
+######################################################################
 # Settings given in secret_settings.py override those in this file.
 ######################################################################
 try:
