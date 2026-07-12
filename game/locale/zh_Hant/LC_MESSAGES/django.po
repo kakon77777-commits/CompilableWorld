@@ -1204,7 +1204,7 @@ msgid "This place should not exist ... contact an admin."
 msgstr "這個地方不應該存在……請聯絡管理員。"
 
 msgid ", and"
-msgstr ",和"
+msgstr ", 和"
 
 msgid "Exits"
 msgstr "出口"

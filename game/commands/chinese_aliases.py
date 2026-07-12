@@ -78,8 +78,163 @@ class CmdSay(default_cmds.CmdSay):
     aliases = default_cmds.CmdSay.aliases + ["說", "說道", "講"]
 
 
+_HELP_CATEGORY_ZH = {
+    "general": "一般",
+    "building": "建造",
+    "admin": "管理",
+    "system": "系統",
+    "comms": "通訊",
+    "batchprocess": "批次處理",
+}
+
+
+def _zh_category(category):
+    """'general' -> '一般 (General)'; unknown categories fall back to Title Case
+    English rather than guessing a translation that might be wrong."""
+    zh = _HELP_CATEGORY_ZH.get(category.lower())
+    return f"{zh} ({category.title()})" if zh else category.title()
+
+
 class CmdHelp(default_cmds.CmdHelp):
+    """Bilingual help chrome: section headers ("Commands"/"Game & World"),
+    category names, and the per-entry framing ("aliases", "Subtopics",
+    "Other topic suggestions") — all safe, documented override points per
+    the parent class's own docstrings ("This method can be overridden to
+    customize the way a help entry is displayed"), not a workaround.
+
+    Deliberately NOT covered: the actual help TEXT of each command (still
+    each command's own English docstring — translating ~100 default
+    commands' full usage text is real, separate content work, not a chrome
+    tweak) and the couple of "no topic found" search-failure messages
+    buried inside CmdHelp.func() itself, which is long and stateful enough
+    that copying it whole just to translate two rarely-seen strings would
+    trade a small win for a real maintenance liability (drifting from
+    upstream's own help-search logic over time).
+    """
+
     aliases = ["說明", "幫助", "指令"]
+
+    def format_help_entry(
+        self, topic="", help_text="", aliases=None, suggested=None, subtopics=None, click_topics=True
+    ):
+        from evennia.utils.utils import dedent, format_grid
+
+        separator = "|C" + "-" * self.client_width() + "|n"
+        start = f"{separator}\n"
+
+        title = f"|C說明：|w{topic}|n (Help for {topic})" if topic else "|r找不到說明 (No help found)|n"
+
+        if aliases:
+            aliases_str = " |C（別名 aliases：{}|C）|n".format(
+                "|C,|n ".join(f"|w{ali}|n" for ali in aliases)
+            )
+        else:
+            aliases_str = ""
+
+        help_text_str = "\n" + dedent(help_text.strip("\n")) if help_text else ""
+
+        if subtopics:
+            if click_topics:
+                subtopics_list = [
+                    f"|lchelp {topic}/{subtop}|lt|w{topic}/{subtop}|n|le" for subtop in subtopics
+                ]
+            else:
+                subtopics_list = [f"|w{topic}/{subtop}|n" for subtop in subtopics]
+            subtopics_str = "\n|C子主題 (Subtopics)：|n\n  {}".format(
+                "\n  ".join(
+                    format_grid(subtopics_list, width=self.client_width(), line_prefix=self.index_topic_clr)
+                )
+            )
+        else:
+            subtopics_str = ""
+
+        if suggested:
+            suggested_sorted = sorted(suggested)
+            if click_topics:
+                suggested_list = [f"|lchelp {sug}|lt|w{sug}|n|le" for sug in suggested_sorted]
+            else:
+                suggested_list = [f"|w{sug}|n" for sug in suggested_sorted]
+            suggested_str = "\n|C其他建議主題 (Other topic suggestions)：|n\n{}".format(
+                "\n  ".join(
+                    format_grid(suggested_list, width=self.client_width(), line_prefix=self.index_topic_clr)
+                )
+            )
+        else:
+            suggested_str = ""
+
+        end = start
+        partorder = (start, title + aliases_str, help_text_str, subtopics_str, suggested_str, end)
+        return "\n".join(part.rstrip() for part in partorder if part)
+
+    def format_help_index(
+        self, cmd_help_dict=None, db_help_dict=None, title_lone_category=False, click_topics=True
+    ):
+        from evennia.utils.utils import format_grid, pad
+        from evennia.utils.ansi import ANSIString
+
+        def _group_by_category(help_dict):
+            grid = []
+            verbatim_elements = []
+            if len(help_dict) == 1 and not title_lone_category:
+                for category in help_dict:
+                    entries = sorted(set(help_dict.get(category, [])))
+                    if click_topics:
+                        entries = [f"|lchelp {entry}|lt{entry}|le" for entry in entries]
+                    grid.extend(entries)
+            else:
+                for category in sorted(set(list(help_dict.keys()))):
+                    category_str = f"-- {_zh_category(category)} "
+                    grid.append(
+                        ANSIString(
+                            self.index_category_clr
+                            + category_str
+                            + "-" * max(0, width - len(category_str))
+                            + self.index_topic_clr
+                        )
+                    )
+                    verbatim_elements.append(len(grid) - 1)
+                    entries = sorted(set(help_dict.get(category, [])))
+                    if click_topics:
+                        entries = [f"|lchelp {entry}|lt{entry}|le" for entry in entries]
+                    grid.extend(entries)
+            return grid, verbatim_elements
+
+        help_index = ""
+        width = self.client_width()
+        grid = []
+        verbatim_elements = []
+        cmd_grid, db_grid = "", ""
+
+        if any(cmd_help_dict.values()):
+            sep1 = (
+                self.index_type_separator_clr
+                + pad("指令 (Commands)", width=width, fillchar="-")
+                + self.index_topic_clr
+            )
+            grid, verbatim_elements = _group_by_category(cmd_help_dict)
+            gridrows = format_grid(
+                grid, width, sep="  ", verbatim_elements=verbatim_elements, line_prefix=self.index_topic_clr
+            )
+            cmd_grid = ANSIString("\n").join(gridrows) if gridrows else ""
+
+        if any(db_help_dict.values()):
+            sep2 = (
+                self.index_type_separator_clr
+                + pad("遊戲與世界 (Game & World)", width=width, fillchar="-")
+                + self.index_topic_clr
+            )
+            grid, verbatim_elements = _group_by_category(db_help_dict)
+            gridrows = format_grid(
+                grid, width, sep="  ", verbatim_elements=verbatim_elements, line_prefix=self.index_topic_clr
+            )
+            db_grid = ANSIString("\n").join(gridrows) if gridrows else ""
+
+        if cmd_grid and db_grid:
+            help_index = f"{sep1}\n{cmd_grid}\n{sep2}\n{db_grid}"
+        else:
+            help_index = f"{cmd_grid}{db_grid}"
+
+        return help_index
 
 
 class CmdQuit(default_cmds.CmdQuit):
