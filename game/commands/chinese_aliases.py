@@ -29,7 +29,37 @@ class CmdLook(default_cmds.CmdLook):
 
 
 class CmdInventory(default_cmds.CmdInventory):
+    """Bilingual output, not just aliases — inventory is checked constantly,
+    and its two possible messages are short, static, and self-contained
+    (no Evennia $funcparser person-conjugation involved), so a clean
+    override is safe here. Compare CmdGet/CmdDrop/CmdGive below, which are
+    NOT overridden this deeply — their success messages go through
+    `$You() $conj(...)` templates that render differently for the actor vs.
+    onlookers, and reimplementing that correctly in Chinese (which doesn't
+    conjugate by person at all — "你" vs. the actor's name — needs different
+    logic, not just a different verb form) is real, separate follow-up work,
+    not a quick text swap. Left as a known, described gap rather than done
+    half-right.
+    """
+
     aliases = default_cmds.CmdInventory.aliases + ["背包", "物品", "身上"]
+
+    def func(self):
+        items = self.caller.contents
+        if not items:
+            string = "你身上什麼都沒帶。 (You are not carrying anything.)"
+        else:
+            from evennia.utils import utils
+            from evennia.utils.ansi import raw as raw_ansi
+
+            table = self.styled_table(border="header")
+            for key, desc, _ in utils.group_objects_by_key_and_desc(items, caller=self.caller):
+                table.add_row(
+                    f"|C{key}|n",
+                    "{}|n".format(utils.crop(raw_ansi(desc or ""), width=50) or ""),
+                )
+            string = f"|w你攜帶著： (You are carrying:)\n{table}"
+        self.msg(text=(string, {"type": "inventory"}))
 
 
 class CmdGet(default_cmds.CmdGet):

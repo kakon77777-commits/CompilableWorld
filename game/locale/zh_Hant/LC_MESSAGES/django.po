@@ -1099,3 +1099,166 @@ msgstr "更改"
 #: web/templates/admin/app_list.html:39
 msgid "You don’t have permission to view or edit anything."
 msgstr "您無權檢視或編輯任何內容。"
+
+msgid "You are already puppeting this object."
+msgstr "你已經在操作這個實體了。"
+
+msgid "You don't have permission to puppet '{key}'."
+msgstr "你沒有權限操作『{key}』。"
+
+msgid "Sharing |c{name}|n with another of your sessions."
+msgstr "正在與你的另一個連線分享 |c{name}|n。"
+
+msgid "|c{name}|n|G is now shared from another of your sessions.|n"
+msgstr "|c{name}|n|G 現在由你的另一個連線共享中。|n"
+
+msgid "Taking over |c{name}|n from another of your sessions."
+msgstr "正在從你的另一個連線接管 |c{name}|n。"
+
+msgid "|c{name}|n|R is now acted from another of your sessions.|n"
+msgstr "|c{name}|n|R 現在由你的另一個連線操作中。|n"
+
+msgid "You cannot control any more puppets (max {max_puppets})"
+msgstr "你無法再操作更多實體了（上限 {max_puppets} 個）"
+
+msgid "closed"
+msgstr "已關閉"
+
+msgid "Reports"
+msgstr "回報"
+
+msgid "Managing {hub_name}"
+msgstr "管理 {hub_name}"
+
+msgid ""
+"(No {status} reports)\n"
+"{text}"
+msgstr ""
+"（沒有{status}的回報）\n"
+"{text}"
+
+msgid "Managing {status} {hub_name}"
+msgstr "管理{status}的 {hub_name}"
+
+msgid "No open {hub_name} at the moment."
+msgstr "目前沒有開放中的 {hub_name}。"
+
+msgid "|uF|nilter by status"
+msgstr "|uF|n 依狀態篩選"
+
+msgid "|uP|nrevious {_REPORTS_PER_PAGE}"
+msgstr "|uP|n 上一頁 {_REPORTS_PER_PAGE}"
+
+msgid "previous"
+msgstr "上一頁"
+
+msgid "prev"
+msgstr "上頁"
+
+msgid "p"
+msgstr "p"
+
+msgid "|uN|next {_REPORTS_PER_PAGE}"
+msgstr "|uN|n 下一頁 {_REPORTS_PER_PAGE}"
+
+msgid "next"
+msgstr "下一頁"
+
+msgid "n"
+msgstr "n"
+
+msgid "View which reports?"
+msgstr "要檢視哪些回報？"
+
+msgid "All open reports"
+msgstr "所有開放中的回報"
+
+msgid " about {receivers}"
+msgstr "，關於 {receivers}"
+
+msgid ""
+"{message}\n"
+"{timestamp} by {senders}{about_clause}\n"
+"{tags}"
+msgstr ""
+"{message}\n"
+"{timestamp}，由 {senders} 提出{about_clause}\n"
+"{tags}"
+
+msgid "Unmark as {tag}"
+msgstr "取消標記為 {tag}"
+
+msgid "Mark as {tag}"
+msgstr "標記為 {tag}"
+
+msgid "Manage another report"
+msgstr "管理其他回報"
+
+msgid "You see nothing special."
+msgstr "你沒看到什麼特別的東西。"
+
+msgid "Your current location has ceased to exist, moving you to (#{dbid})."
+msgstr "你所在的位置已經不存在了，已將你移動到 (#{dbid})。"
+
+msgid "This place should not exist ... contact an admin."
+msgstr "這個地方不應該存在……請聯絡管理員。"
+
+msgid ", and"
+msgstr ",和"
+
+msgid "Exits"
+msgstr "出口"
+
+msgid "Characters"
+msgstr "人物"
+
+msgid "You see"
+msgstr "你看到"
+
+msgid "You become |w{key}|n."
+msgstr "你化身為 |w{key}|n。"
+
+msgid "{object} is leaving {origin}, heading for {destination}."
+msgstr "{object} 離開了{origin}，前往{destination}。"
+
+msgid "somewhere"
+msgstr "某處"
+
+msgid "nowhere"
+msgstr "不知名處"
+
+msgid "Could not view '{target_name}'."
+msgstr "無法檢視『{target_name}』。"
+
+msgid "You cannot drop {obj}"
+msgstr "你無法放下 {obj}"
+
+msgid "{self} whisper to {all_receivers}, \"|n{speech}|n\""
+msgstr "{self}對{all_receivers}低語道，「|n{speech}|n」"
+
+msgid "{object} whispers: \"|n{speech}|n\""
+msgstr "{object}低語道：「|n{speech}|n」"
+
+msgid "{self} say, \"|n{speech}|n\""
+msgstr "{self}說道，「|n{speech}|n」"
+
+msgid "{object} says, \"{speech}\""
+msgstr "{object}說道：「{speech}」"
+
+msgid "You"
+msgstr "你"
+
+msgid "|rA character named '|w{name}|r' already exists.|n"
+msgstr "|r已經有一個角色叫做『|w{name}|r』了。|n"
+
+msgid " (exit to {destination})"
+msgstr "（通往{destination}的出口）"
+
+msgid " (exit)"
+msgstr "（出口）"
+
+msgid " (carried)"
+msgstr "（攜帶中）"
+
+msgid "Invalid regular expression."
+msgstr "正規表達式格式錯誤。"
