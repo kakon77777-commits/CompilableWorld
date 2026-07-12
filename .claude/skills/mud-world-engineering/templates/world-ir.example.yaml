@@ -1,0 +1,73 @@
+# Minimal worked example — a 3-room, 1-quest world.
+# Use this as the shape to imitate, not content to reuse.
+world:
+  id: black_tide_city
+  version: 0.1.0
+  title: "Black Tide City"
+  genre: dark-fantasy
+  start_room: south_gate
+
+axioms:
+  - id: magic_memory_cost
+    statement: "Casting a memory spell costs the caster real memories."
+    enforcement: hard
+
+regions:
+  - id: gray_crown
+    title: "The Gray Crown District"
+    rooms:
+      - id: south_gate
+        title: "South Gate"
+        description: "A weathered stone gate marks the edge of the district."
+      - id: market
+        title: "The Market"
+        description: "Stalls crowd a muddy square. Old Maren sits by the well."
+      - id: vault_antechamber
+        title: "Vault Antechamber"
+        description: "A locked door in the market's back wall, unremarkable until now."
+    exits:
+      - from: south_gate
+        to: market
+        direction: north
+      - from: market
+        to: south_gate
+        direction: south
+      - from: market
+        to: vault_antechamber
+        direction: down
+        locked_until: "quest.find_the_key.completed"
+      - from: vault_antechamber
+        to: market
+        direction: up
+
+characters:
+  - id: old_maren
+    title: "Old Maren"
+    role: quest_giver
+    location: market
+    beliefs:
+      - "believes the king is still alive"
+
+items:
+  - id: rusted_key
+    location: south_gate
+
+quests:
+  - id: find_the_key
+    giver: old_maren
+    prerequisites: []
+    steps:
+      - "pick up rusted_key from south_gate"
+      - "return rusted_key to old_maren"
+    reward: "unlocks: vault_antechamber"
+
+events:
+  - id: gate_collapse
+    trigger: "quest.find_the_key.completed"
+
+provenance:
+  source_type: novel
+  source_ref: "example — not from a real source"
+
+version: 0.1.0
+patch: null

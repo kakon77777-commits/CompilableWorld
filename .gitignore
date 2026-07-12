@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+
+# Evennia game dir has its own .gitignore for secrets/db/logs; nothing to
+# duplicate here, but make sure a fresh top-level scan never touches these
+# even if the nested .gitignore is ever missing.
+game/server/conf/secret_settings.py
+game/server/*.db3
+game/server/logs/*.log*
+game/server/.static/*
+game/server/.media/*
