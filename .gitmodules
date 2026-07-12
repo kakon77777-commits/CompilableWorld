@@ -1,0 +1,3 @@
+[submodule "engine/evennia"]
+	path = engine/evennia
+	url = https://github.com/kakon77777-commits/evennia.git

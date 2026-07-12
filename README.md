@@ -15,11 +15,12 @@ CompilableWorld/
 ├── docs/whitepapers/       — the 3 design documents this project is built from, read in order
 ├── world_ir/               — Python package: World IR schema, validator, provenance tracking
 ├── worlds/                 — generated World IR documents (one subfolder per world)
-├── .claude/skills/mud-world-engineering/  — the Claude Code Skill that runs the pipeline
-└── (engine lives separately — see below)
+├── engine/evennia/         — the Evennia engine, as a git submodule (see below)
+├── game/                   — an actual initialized Evennia game dir using the engine above
+└── .claude/skills/mud-world-engineering/  — the Claude Code Skill that runs the pipeline
 ```
 
-The Evennia engine fork is **not** vendored into this repo. It lives at `D:\Ai\external-repos\evennia` (git remote `origin` = `kakon77777-commits/evennia`, `upstream` = `evennia/evennia`), matching how other forked external tools are kept in this workspace (e.g. `tandem-browser`). This project installs it in editable mode rather than copying it in, so upstream Evennia updates can still be pulled and diffed cleanly.
+The Evennia engine fork lives at `engine/evennia` as a **git submodule** (`origin` = `kakon77777-commits/evennia`, `upstream` = `evennia/evennia`) — not vendored/copied in, so upstream Evennia updates can still be pulled and diffed cleanly, but tracked inside this repo rather than scattered elsewhere in the workspace. After cloning this repo, run `git submodule update --init` to pull it, then `pip install -e ./engine/evennia` into your venv.
 
 ## Design documents
 

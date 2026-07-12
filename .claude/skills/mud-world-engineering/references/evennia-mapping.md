@@ -10,7 +10,7 @@ The founding whitepaper (`compilable-world-architecture.md`, §1) opens with exa
 
 ## Batch-command semantics the compiler relies on
 
-Verified against the actual command implementations in `D:\Ai\external-repos\evennia\evennia\commands\default\building.py` — not assumed from general MU* knowledge, because getting this wrong produces a script that silently builds exits and drops NPCs in the wrong room:
+Verified against the actual command implementations in `engine/evennia/evennia/commands/default/building.py` (the engine git submodule) — not assumed from general MU* knowledge, because getting this wrong produces a script that silently builds exits and drops NPCs in the wrong room:
 
 - `@dig <name>;<alias>` with no `=` clause creates a room with no exits and doesn't touch the caller's current location — safe to run for every room up front, in any order.
 - `@open <exit> = <destination>` and `@create/drop <obj>` both act on **the caller's current location**, not on any room named in the command itself. There is no "from room" argument to `@open`.

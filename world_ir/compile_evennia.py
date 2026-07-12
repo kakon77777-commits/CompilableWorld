@@ -12,8 +12,8 @@ Refuses to run on a world that hasn't passed `validate_world()` — compiling an
 invalid world just moves the same bugs somewhere harder to read.
 
 Batch-command semantics this compiler relies on — verified against the actual
-Evennia source in D:\\Ai\\external-repos\\evennia\\evennia\\commands\\default\\building.py,
-AND against a real batch-command run against a live Evennia server during
+Evennia source in engine/evennia/evennia/commands/default/building.py (the
+engine submodule), AND against a real batch-command run against a live Evennia server during
 development (not assumed from memory or the docs alone — two real bugs only
 showed up under an actual run, see notes below):
 
