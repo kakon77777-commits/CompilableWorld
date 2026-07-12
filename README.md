@@ -36,7 +36,7 @@ Read in this order — each supersedes/refines the previous on overlapping groun
 
 ## Current status
 
-Phase 0 / MVP-0.1 in progress: source → World IR → validation → Evennia output → single-player playable world, per `03-compilable-world-architecture.md` §14. Multiplayer, dynamic NPCs, AI GM, and further runtime targets are explicitly out of scope until this loop is proven on a real (not toy) source text.
+See **[ROADMAP.md](ROADMAP.md)** for the honest state of the project: what's actually built vs. what each of the 6 whitepapers still only designs, and the suggested next priority. Short version: the core MVP loop (source → World IR → validate → compile → Evennia → AI test-player → report) is real and proven on a toy world; a real novel-scale world is in progress and already surfacing the next real gap (papers 04/06's Authoring Layer / World Seed Package, not yet implemented).
 
 ## Running it
 
