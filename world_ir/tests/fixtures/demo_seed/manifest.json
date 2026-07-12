@@ -1,0 +1,30 @@
+{
+  "seed_id": "demo_seed",
+  "seed_version": "0.1.0",
+  "schema_version": "0.1.0",
+  "source_work": {"title": "Demo Seed", "rights_status": "user_owned"},
+  "tables": {
+    "characters": {
+      "file": "data/characters.csv",
+      "id_field": "id",
+      "required_fields": ["id", "name"],
+      "references": {"faction": "factions"}
+    },
+    "factions": {
+      "file": "data/factions.csv",
+      "id_field": "id",
+      "required_fields": ["id", "name"]
+    }
+  },
+  "documents": {
+    "axioms": {
+      "file": "data/axioms.json",
+      "record_path": "axioms",
+      "id_field": "id",
+      "required_fields": ["id", "statement"]
+    },
+    "timeline": {
+      "file": "data/timeline.json"
+    }
+  }
+}

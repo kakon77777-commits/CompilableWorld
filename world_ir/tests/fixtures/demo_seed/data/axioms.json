@@ -1,0 +1,7 @@
+{
+  "note": "demo axioms for testing",
+  "axioms": [
+    {"id": "magic_costs_memory", "statement": "施法消耗施術者記憶", "enforcement": "hard", "secrecy": "public"},
+    {"id": "death_is_permanent", "statement": "死亡是永久的", "enforcement": "hard", "secrecy": "public"}
+  ]
+}

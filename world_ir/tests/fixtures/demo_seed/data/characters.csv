@@ -1,0 +1,7 @@
+id,name,faction,notes
+old_maren,老瑪蓮,guard_council,城門的老婦人
+wandering_merchant,流浪商人,free_traders,NA
+no_faction_npc,無派系NPC,NA,獨行者
+broken_ref_npc,壞掉的參照,nonexistent_faction,測試用
+old_maren,重複ID測試,guard_council,NA
+,無名氏,NA,缺少必填欄位id測試
