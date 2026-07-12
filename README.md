@@ -12,7 +12,8 @@ AI proposes; the system validates; version control protects. No single AI pass b
 
 ```
 CompilableWorld/
-├── docs/whitepapers/       — the 3 design documents this project is built from, read in order
+├── docs/whitepapers/       — the 5 design documents this project is built from, read in order
+│                             (Traditional Chinese originals; 04/05 also have English translations)
 ├── world_ir/               — Python package: World IR schema, validator, provenance tracking
 ├── worlds/                 — generated World IR documents (one subfolder per world)
 ├── engine/evennia/         — the Evennia engine, as a git submodule (see below)
@@ -28,7 +29,9 @@ Read in this order — each supersedes/refines the previous on overlapping groun
 
 1. **`01-mssp-scale-skill.md`** — the general Mother-Set/Subset Paradigm (MSSP) for organizing large AI Agent skill systems. This project's own directory structure and the Skill's internal organization follow it.
 2. **`02-mud-world-engineering-mssp.md`** — MSSP applied specifically to MUD world engineering: FMS/SCL/SMS/TMS/DMS/Router mapped onto source-intake, world-understanding, World IR, compilation, persistence, agent governance, and testing.
-3. **`03-compilable-world-architecture.md`** — the most refined pass. Reframes MUD as just the first Runtime Adapter for a "Compilable World Platform," and adds detail the earlier two don't have: risk-graded world mutation levels (L0 narrative-only through L4 core/engine), event-sourced world state (Snapshot + Event Log, not snapshot-only), AI-player test metrics (room/quest/branch coverage, soft-lock detection), and copyright/provenance handling for user-uploaded source text. **Treat this one as authoritative where it conflicts with #2.**
+3. **`03-compilable-world-architecture.md`** — reframes MUD as just the first Runtime Adapter for a "Compilable World Platform," and adds detail the earlier two don't have: risk-graded world mutation levels (L0 narrative-only through L4 core/engine), event-sourced world state (Snapshot + Event Log, not snapshot-only), AI-player test metrics (room/quest/branch coverage, soft-lock detection), and copyright/provenance handling for user-uploaded source text. Supersedes #2 where they conflict.
+4. **`04-authoring-layer-json-csv-manifest.md`** ([English](04-authoring-layer-json-csv-manifest.md)) — defines an "Authoring Layer" of JSON/CSV/Manifest sitting between raw source text and the World IR, for data too large or tabular to hand-author as YAML (hundreds of characters, cities, economy parameters). Written after real friction hit this exact wall on the first large-scale World IR build. Pipeline: source → JSON/CSV Authoring Layer → normalized → validated → World IR → compiled world → runtime.
+5. **`05-hierarchical-state-machine-mud.md`** ([English](05-hierarchical-state-machine-mud.md)) — a further-out architecture: natural-language player actions compiled by AI into a structured, validated "Action IR," executed by hierarchical (world/region/scene/entity/system) finite state machines, with event sourcing and separated narrative rendering. Aspirational/roadmap-stage, not yet implemented — the MVP loop in this repo is still classic verb-target commands.
 
 ## Current status
 
