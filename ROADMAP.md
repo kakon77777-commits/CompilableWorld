@@ -1,6 +1,8 @@
-# CompilableWorld — Status & Roadmap
+# CompilableWorld-Evennia-Prototype — Status & Roadmap
 
-Six design documents now exist (`docs/whitepapers/`), covering a wide arc from general methodology to aspirational natural-language gameplay. This file exists so nobody — including a future session — has to reread all six to answer "what's actually real right now." Updated 2026-07-13.
+**2026-07-13: this repo is now the prototype/reference implementation, not the main line of development.** Paper 07 (`docs/whitepapers/07-evennia-to-mssp-runtime.md`) is Neo's own decision to pivot to a self-built MSSP Modular World Runtime, with Evennia demoted to reference implementation / compatibility adapter. The successor project lives in a new, separate folder (not yet linked here — check with Neo for its location before assuming this repo is where new Runtime work happens). Everything below describes this repo's own history and is still accurate for what it covers; it's just no longer where the canonical engine work continues.
+
+Seven design documents now exist (`docs/whitepapers/`), covering a wide arc from general methodology to aspirational natural-language gameplay to the pivot away from this repo's own engine choice. This file exists so nobody — including a future session — has to reread all seven to answer "what's actually real right now, and where does it live." Updated 2026-07-13.
 
 ## What's actually built and working
 
@@ -21,6 +23,7 @@ Six design documents now exist (`docs/whitepapers/`), covering a wide arc from g
 | 04 — Authoring Layer (JSON/CSV/Manifest) | A JSON/CSV/Manifest layer between raw source and World IR, for data too large for hand-authored YAML | **Implemented as part of 06's Seed loader** (see below) — the two papers proposed near-identical mechanisms; building one covered both. |
 | 05 — Hierarchical State-Machine MUD | Natural-language player actions → AI-compiled Action IR → hierarchical FSMs → event sourcing | **Not implemented, aspirational.** The MVP is still classic verb-target commands (get/drop/look/etc.). No near-term work planned here. |
 | 06 — Novel-to-MUD World Adaptation | Two-stage AI (offline novel→World Seed Package adaptation, vs. in-game local generation), Canon tiers (Source/Adapted/Generated), entity resolution, timeline reconstruction | **Structural loading + validation implemented** (`world_ir/seed.py`, `seed_validate.py`, manifest format in `world_ir/SEED_FORMAT.md`) and **validated read-only against the real `mingyun_zhiyu` data** (2026-07-13) — see findings below. **Not yet implemented**: entity resolution/alias merging, timeline reconstruction, and the gameplay-adaptation step (Seed → World IR) — those still need real design judgment on how this specific setting's Canon becomes a MUD, not just structural plumbing. |
+| 07 — Evennia → MSSP Runtime | Demote Evennia to reference/prototype/adapter; self-build a World Kernel + MSSP mechanism modules + UI-decoupled Runtime | **This is the paper that ended this repo's role as the main project** (2026-07-13). Not implemented here and not meant to be — it's built in the successor project. This repo's `world_ir/` (Seed loader, World IR schema/validator/compiler) is a plausible reference/input for that Runtime's `compiler/` layer, and the Evennia integration is a plausible `adapters/evennia/` target per paper 07 ch.11.3 — but that's the new project's call, not decided here. |
 
 ## Real findings from validating `mingyun_zhiyu` (2026-07-13, read-only — nothing written to that folder)
 
@@ -33,10 +36,12 @@ Built a scratch manifest (kept outside the repo, in the session's scratchpad) po
 
 `world_ir/schema.py` (the MUD-ready World IR) only parses a single flat YAML file — that half of the gap is unchanged. What's now closed: `world_ir/seed.py` reads a Canon-tier World Seed (manifest + JSON/CSV tables) and validates it structurally. What's still open: turning a validated Seed into a compilable World IR (paper 06 ch.9's "gameplay adaptation operator" — linear plot → quest graph, ability prose → rule numbers, geography → rooms) is real design work, not yet started, and probably shouldn't be automated blindly — it's where Neo's actual creative judgment about `mingyun_zhiyu` belongs.
 
-## Suggested priority order (Neo's call, not decided here)
+## Suggested priority order — superseded by the paper-07 pivot
 
-1. **Gameplay adaptation (Seed → World IR)** — now that Seed loading/validation is real, this is the next concrete link. Likely needs Neo's input on *which* slice of a 48-character, 16-city setting becomes a first playable MUD region, not just a generic algorithm.
-2. **Patch/event-sourcing** (paper 03's unbuilt half) — needed once a world needs to be *expanded* rather than built fresh each time; not urgent while everything is still first-build.
-3. **Action IR / hierarchical state machines** (paper 05) — genuinely long-term; no current work depends on it.
+The order below was this repo's own plan before paper 07. Kept for the historical record; **priority decisions now belong to the successor Runtime project**, not this repo. If picking up this repo's world_ir work as an input to that project, gameplay adaptation (Seed → World IR) is still the most-immediately-useful unfinished piece.
+
+1. ~~Gameplay adaptation (Seed → World IR)~~ — still not built; still needs Neo's input on which slice of a 48-character, 16-city setting becomes a first playable region.
+2. ~~Patch/event-sourcing~~ (paper 03's unbuilt half) — now paper 07's Event Bus / Transition Engine territory instead.
+3. ~~Action IR / hierarchical state machines~~ (paper 05) — now paper 07's Action Runtime / Kernel territory instead.
 
 This file should get updated whenever a paper moves from "designed" to "implemented," or when priorities change — it's meant to stay short and honest, not to become another whitepaper.
